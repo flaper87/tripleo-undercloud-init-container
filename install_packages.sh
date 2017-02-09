@@ -6,7 +6,9 @@ yum install -y \
     git \
     vim \
     sudo \
-    docker
+    docker \
+    python-dev \
+    python-setuptools
 
 # Remove unnecessary packages
 yum autoremove -y
