@@ -2,7 +2,7 @@
 
 set -ex
 
-docker run --name undercloud-deploy --net=host --privileged \
+docker run -d --name undercloud-deploy --net=host --privileged \
 -v /tmp:/tmp \
 -v /etc/puppet:/etc/puppet \
 -v /var/lib/kolla:/var/lib/kolla \
