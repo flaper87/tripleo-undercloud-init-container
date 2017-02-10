@@ -42,6 +42,30 @@ cat > tripleo-heat-templates/roles_data_undercloud.yaml <<-EOF_CAT
     - OS::TripleO::Services::Apache
     - OS::TripleO::Services::RabbitMQ
     - OS::TripleO::Services::GlanceApi
+    - OS::TripleO::Services::SwiftProxy
+    - OS::TripleO::Services::SwiftStorage
+    - OS::TripleO::Services::SwiftRingBuilder
+    - OS::TripleO::Services::Memcached
+    - OS::TripleO::Services::HeatApi
+    - OS::TripleO::Services::HeatApiCfn
+    - OS::TripleO::Services::HeatEngine
+    - OS::TripleO::Services::NovaApi
+    #- OS::TripleO::Services::NovaPlacement
+    - OS::TripleO::Services::NovaMetadata
+    - OS::TripleO::Services::NovaScheduler
+    - OS::TripleO::Services::NovaConductor
+    - OS::TripleO::Services::MistralEngine
+    - OS::TripleO::Services::MistralApi
+    - OS::TripleO::Services::MistralExecutor
+    - OS::TripleO::Services::IronicApi
+    - OS::TripleO::Services::IronicConductor
+    - OS::TripleO::Services::IronicPxe
+    - OS::TripleO::Services::NovaIronic
+    - OS::TripleO::Services::Zaqar
+    - OS::TripleO::Services::NeutronApi
+    - OS::TripleO::Services::NeutronCorePlugin
+    - OS::TripleO::Services::NeutronOvsAgent
+    - OS::TripleO::Services::NeutronDhcpAgent
 EOF_CAT
 
 
