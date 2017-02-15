@@ -69,4 +69,20 @@ cat > tripleo-heat-templates/roles_data_undercloud.yaml <<-EOF_CAT
 EOF_CAT
 
 
+LOCAL_IP=${LOCAL_IP:-`/usr/sbin/ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n'`}
+
+cat > $HOME/run.sh <<-EOF_CAT
+time sudo openstack undercloud deploy --templates=$HOME/tripleo-heat-templates \
+--local-ip=$LOCAL_IP \
+--keep-running \
+--heat-native \
+-e $HOME/tripleo-heat-templates/environments/services/ironic.yaml \
+-e $HOME/tripleo-heat-templates/environments/services/mistral.yaml \
+-e $HOME/tripleo-heat-templates/environments/services/zaqar.yaml \
+-e $HOME/tripleo-heat-templates/environments/docker.yaml \
+-e $HOME/tripleo-heat-templates/environments/mongodb-nojournal.yaml \
+-e $HOME/custom.yaml
+EOF_CAT
+chmod 755 $HOME/run.sh
+
 sh run.sh
