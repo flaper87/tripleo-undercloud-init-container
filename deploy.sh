@@ -9,6 +9,8 @@ pushd undercloud_containers
 sh doit.sh
 popd
 
+sudo yum install openstack-heat-monolith
+
 cat > tripleo-heat-templates/environments/undercloud.yaml <<-EOF_CAT
 resource_registry:
   OS::TripleO::Network::Ports::RedisVipPort: ../network/ports/noop.yaml
@@ -50,7 +52,7 @@ cat > tripleo-heat-templates/roles_data_undercloud.yaml <<-EOF_CAT
     - OS::TripleO::Services::HeatApiCfn
     - OS::TripleO::Services::HeatEngine
     - OS::TripleO::Services::NovaApi
-    #- OS::TripleO::Services::NovaPlacement
+#    - OS::TripleO::Services::NovaPlacement
     - OS::TripleO::Services::NovaMetadata
     - OS::TripleO::Services::NovaScheduler
     - OS::TripleO::Services::NovaConductor
@@ -64,7 +66,7 @@ cat > tripleo-heat-templates/roles_data_undercloud.yaml <<-EOF_CAT
     - OS::TripleO::Services::Zaqar
     - OS::TripleO::Services::NeutronApi
     - OS::TripleO::Services::NeutronCorePlugin
-    - OS::TripleO::Services::NeutronOvsAgent
+#    - OS::TripleO::Services::NeutronOvsAgent
     - OS::TripleO::Services::NeutronDhcpAgent
 EOF_CAT
 
