@@ -5,8 +5,6 @@ set -ex
 docker create --name undercloud-volumes \
   -v tmp:/tmp \
   -v etc-puppet:/etc/puppet \
-  -v /usr/share/puppet:/usr/share/puppet \
-  -v /usr/share/openstack-puppet:/usr/share/openstack-puppet \
   -v kolla:/var/lib/kolla \
   -v docker-puppet:/var/lib/docker-puppet \
   -v config-data:/var/lib/config-data \

@@ -19,6 +19,16 @@ popd
 #git fetch https://git.openstack.org/openstack/tripleo-heat-templates refs/changes/85/439585/2 && git cherry-pick FETCH_HEAD
 #popd
 
+sudo rm -Rf /etc/puppet/modules/*
+sudo cp -rf /usr/share/openstack-puppet/modules/* /etc/puppet/modules/
+
+# Puppet Ironic (this is required for dprince who needs to customize
+# Ironic configs via ExtraConfig settings.)
+pushd /etc/puppet/modules
+rm -Rf tripleo
+git clone git://git.openstack.org/openstack/puppet-tripleo tripleo
+popd
+
 cat > tripleo-heat-templates/environments/undercloud.yaml <<-EOF_CAT
 resource_registry:
   OS::TripleO::Network::Ports::RedisVipPort: ../network/ports/noop.yaml
