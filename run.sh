@@ -2,16 +2,19 @@
 
 set -ex
 
-docker run --name undercloud-dind --privileged -d \
-  -v /tmp \
-  -v /etc/puppet \
-  -v /var/lib/kolla \
-  -v /var/lib/docker-puppet \
-  -v /var/lib/config-data \
-  docker:dind
+docker create --name undercloud-volumes \
+  -v tmp:/tmp \
+  -v etc-puppet:/etc/puppet \
+  -v /usr/share/puppet:/usr/share/puppet \
+  -v /usr/share/openstack-puppet:/usr/share/openstack-puppet \
+  -v kolla:/var/lib/kolla \
+  -v docker-puppet:/var/lib/docker-puppet \
+  -v config-data:/var/lib/config-data \
+  -v var-run:/var/run \
+   flaper87/tripleo-undercloud-init-container 
+
+docker run --net=host --privileged --name docker-daemon --volumes-from undercloud-volumes -d docker:dind --storage-driver=overlay
 
 docker run -d --name undercloud-deploy --net=host --privileged \
-       --link undercloud-dind:docker \
-       -e DOCKER_HOST=tcp://docker:2375 \
-       --volumes-from undercloud-dind \
+       --volumes-from undercloud-volumes \
        -ti flaper87/tripleo-undercloud-init-container /root/deploy.sh

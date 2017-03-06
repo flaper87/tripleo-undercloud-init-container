@@ -9,7 +9,15 @@ pushd undercloud_containers
 sh doit.sh
 popd
 
-sudo yum install openstack-heat-monolith
+sudo rm -Rf /usr/lib/python2.7/site-packages/heat/
+git clone git://git.openstack.org/openstack/heat
+pushd heat 
+sudo python setup.py install
+popd
+
+#pushd tripleo-heat-templates
+#git fetch https://git.openstack.org/openstack/tripleo-heat-templates refs/changes/85/439585/2 && git cherry-pick FETCH_HEAD
+#popd
 
 cat > tripleo-heat-templates/environments/undercloud.yaml <<-EOF_CAT
 resource_registry:

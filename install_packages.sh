@@ -28,6 +28,7 @@ yum install -y \
   python-heat-agent-docker-cmd \
   docker \
   openvswitch \
+  openstack-heat-monolith \
   openstack-heat-api \
   openstack-heat-engine \
   openstack-puppet-modules
