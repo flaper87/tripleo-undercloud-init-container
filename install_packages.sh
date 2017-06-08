@@ -1,5 +1,3 @@
-#!/bin/bash
-
 set -ex
 
 yum -y install epel-release
