@@ -1,0 +1,34 @@
+- name: Create Undercloud data container
+  docker:
+    state: present
+    name: undercloud-volumes
+    image: flaper87/tripleo-undercloud-init-container
+    volumes:
+        -v /tmp:/tmp
+        -v /etc/hosts:/etc/hosts
+        -v /etc/puppet:/etc/puppet
+        -v /etc/ssh:/etc/ssh
+        -v /var/lib/kolla:/var/lib/kolla
+        -v /var/lib/docker-puppet:/var/lib/docker-puppet
+        -v /var/lib/config-data:/var/lib/config-data
+        -v /var/run:/var/run
+
+- name: Get current container id
+  cmd: cat /proc/self/cgroup | grep -o  -e "docker-.*.scope" | head -n 1 | sed "s/docker-\(.*\).scope/\\1/"
+  register: container_id
+
+- debug: var=container_id
+
+- name: Deploy the undercloud
+  docker:
+    state: present
+    name: undercloud-deploy
+    detach: true
+    docker_user: root
+    net: host
+    privileged: true
+    command: /root/deploy.sh
+    image: flaper87/tripleo-undercloud-init-container
+    volumes_from:
+      - '{{container_id}}'
+      - undercloud-volumes
