@@ -1,15 +1,9 @@
 set -ex
 
-yum -y install epel-release
-yum install -y \
-    git \
-    vim \
-    sudo \
-    docker \
-    python-dev \
-    python-setuptools \
-    python-requests \
-    curl vim-enhanced telnet 
+yum -y autoremove `yum list installed | grep group_ansible | awk '{ print $1 }'`
+rm /etc/yum.repos.d/asb.repo || true
+
+yum -y install epel-release git python-requests
 
 cd
 git clone https://git.openstack.org/openstack/tripleo-repos
@@ -19,6 +13,14 @@ cd
 tripleo-repos current
 
 yum -y update
+
+yum install -y \
+    vim \
+    sudo \
+    docker \
+    python-dev \
+    python-setuptools \
+    curl vim-enhanced telnet 
 
 yum install -y \
   python-heat-agent \
